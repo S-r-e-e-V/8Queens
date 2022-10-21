@@ -51,12 +51,6 @@ class Nodes:
             return Nodes(side_state), side_cost
         return Nodes(child), child_cost
 
-    # def lowest_cost_child(self):
-    #     children = self.get_child_states()
-    #     costs = [Nodes.state_cost(child) for child in children]
-    #     best_child_index = np.argmin(costs)
-    #     return Nodes(children[best_child_index]), costs[best_child_index]
-
     @staticmethod
     def visualize(state):
         board = [['.' for j in range(8)] for i in range(8)]

@@ -41,8 +41,6 @@ if __name__ == "__main__":
         # Solve with Hill Climbing
         hill = HillClimbing(state)
         # Steepest Ascent
-        # end_state, end_cost, is_plateau, moves = hill.steepest_ascent()
-        # if(end_cost == 0): num_moves[algos[0]].append(moves)
 
         # First Choice
         end_state, end_cost, is_plateau, moves = hill.first_choice()
