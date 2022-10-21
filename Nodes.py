@@ -1,7 +1,7 @@
 import numpy as np
 from itertools import product
 
-class Node:
+class Nodes:
     state = np.array([0,1,2,3,4,5,6,7])
 
     def __init__(self, column_positions):
@@ -9,7 +9,7 @@ class Node:
         self.state = np.array(column_positions)
         
     def get_cost(self):
-        return Node.state_cost(self.state)
+        return Nodes.state_cost(self.state)
 
     @staticmethod
     def state_cost(state):
@@ -34,7 +34,7 @@ class Node:
         index = np.random.randint(8)
         choices = [a for a in range(8) if a != self.state[index]]
         new_state[index] = np.random.choice(choices)
-        return Node(new_state), Node.state_cost(new_state)
+        return Nodes(new_state), Nodes.state_cost(new_state)
 
     def first_choice_child(self):
         cost = self.get_cost()
@@ -42,20 +42,20 @@ class Node:
         np.random.shuffle(children)
         side_state, side_cost = None, None
         for child in children:
-            child_cost = Node.state_cost(child)
+            child_cost = Nodes.state_cost(child)
             if child_cost < cost:
-                return Node(child), child_cost
+                return Nodes(child), child_cost
             if side_state is None and child_cost == cost:
                 side_state, side_cost = child, child_cost
         if side_state is not None:
-            return Node(side_state), side_cost
-        return Node(child), child_cost
+            return Nodes(side_state), side_cost
+        return Nodes(child), child_cost
 
-    def lowest_cost_child(self):
-        children = self.get_child_states()
-        costs = [Node.state_cost(child) for child in children]
-        best_child_index = np.argmin(costs)
-        return Node(children[best_child_index]), costs[best_child_index]
+    # def lowest_cost_child(self):
+    #     children = self.get_child_states()
+    #     costs = [Nodes.state_cost(child) for child in children]
+    #     best_child_index = np.argmin(costs)
+    #     return Nodes(children[best_child_index]), costs[best_child_index]
 
     @staticmethod
     def visualize(state):
@@ -71,21 +71,21 @@ if __name__ == "__main__":
     # print("Cost function test")
     # test_cost = {(4,5,6,3,4,5,6,5): 17, (4,0,6,3,4,5,6,5): 12, (4,5,6,4,4,5,6,5): 15}
     # for state, cost in test_cost.items():
-    #     node = Node(state)
-    #     calc_cost = node.get_cost()
+    #     Nodes = Nodes(state)
+    #     calc_cost = Nodes.get_cost()
     #     print("state:{} cost:{}".format(state, calc_cost))
     #     assert(cost == calc_cost)
     # print()
 
     # # Generate children
-    # node = Node((4,5,6,3,4,5,6,5))
-    # children = node.get_child_states()
+    # nodes = Nodes((4,5,6,3,4,5,6,5))
+    # children = Nodes.get_child_states()
     # print("Number of child states:{}".format(len(children)))
     # # for child in children:
     # #     print(child)
 
     # Get the best valued chlid
-    node = Node((2,0,7,4,1,1,6,5))
-    best_child, best_cost = node.lowest_cost_child()
+    nodes = Nodes((2,0,7,4,1,1,6,5))
+    best_child, best_cost = Nodes.lowest_cost_child()
     print("best child:{} score:{}".format(best_child.state, best_cost))
 

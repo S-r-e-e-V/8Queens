@@ -1,6 +1,6 @@
 import numpy as np
-from HillClimbing import HillClimbing
-from SimulatedAnnealing import SimulatedAnnealing
+from Hill import HillClimbing
+# from SimulatedAnnealing import SimulatedAnnealing
 import warnings
 import sys
 
@@ -31,25 +31,25 @@ if __name__ == "__main__":
             sys.exit()
     np.random.seed(42)
 
-    algos = [ "Hill climbing steepest ascent",'Hill climbing', 'Hill climbing sideways move']
+    algos = [ 'Hill climbing', 'Hill climbing sideways move']
     num_moves = {algo: [] for algo in algos}
 
     # Generate random state
     states = [generate_state() for i in range(NUM_STATES)]
-    print("Running algorithms...")
+    print("Running")
     for i, state in enumerate(states):
         # Solve with Hill Climbing
         hill = HillClimbing(state)
         # Steepest Ascent
-        end_state, end_cost, is_plateau, moves = hill.steepest_ascent()
-        if(end_cost == 0): num_moves[algos[0]].append(moves)
+        # end_state, end_cost, is_plateau, moves = hill.steepest_ascent()
+        # if(end_cost == 0): num_moves[algos[0]].append(moves)
 
         # First Choice
         end_state, end_cost, is_plateau, moves = hill.first_choice()
-        if(end_cost == 0): num_moves[algos[1]].append(moves)
+        if(end_cost == 0): num_moves[algos[0]].append(moves)
         # First Choice (max. 100 sideways moves)
-        # end_state, end_cost, is_plateau, moves = hill.first_choice(100)
-        # if(end_cost == 0): num_moves[algos[2]].append(moves)
+        end_state, end_cost, is_plateau, moves = hill.first_choice(100)
+        if(end_cost == 0): num_moves[algos[1]].append(moves)
 
         # sim = SimulatedAnnealing(state)
         # Simulated Annealing
